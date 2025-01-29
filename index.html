@@ -67,6 +67,31 @@
 			transform: scale(2.3) translate(10px, -6px);
 			display: inline-block;
 		}
+
+		article, section {
+			position: relative;
+		}
+
+		article::before {
+			position: absolute;
+			left: -60px;
+			content: '';
+			height: 100%;
+			width: 0px;
+			border-left: 13px dashed #e6c34380;
+			transform: scaleX(0.2);
+		}
+
+		section::before {
+			position: absolute;
+			left: -73px;
+			top: -6px;
+			content: '';
+			height: 40px;
+			width: 40px;
+			background-color: #eedca1;
+			border-radius: 50%;
+		}
 	</style>
 	<link rel="icon" type="image/png" sizes="64x64" href="logo-64.png">
 	<title>Speech to Text Converter</title>
@@ -74,28 +99,39 @@
 <body>
 	<div class="content">
 		<h1>Speech to Text Converter<br>Installed!</h1>
-		<p>Click the puzzle piece (1) in the top right of your browser.<br>Then, click the little pin (2) next to the extension:</p>
-		<img src="welcome-1.webp" alt="welcome-1">
 
-		<p>Open the extension (3) on any page<br>to start using Speech to Text Converter:</p>
-		<img src="welcome-2.webp" alt="welcome-2">
+		<article>
+			<section>
+				<p>Click the puzzle piece (1) in the top right of your browser.<br>Then, click the little pin (2) next to the extension:</p>
+				<img src="welcome-1.webp" alt="welcome-1">
+			</section>
 
-		<h2>Try it out on this page!</h2>
-		<p>
-			Click the input field below (4),
-			tap the microphone button (5),<br>
-			and grant microphone permissions (6).<br>
-			<small><i>You'll need to grant permissions on each page where you want to use the Speech to Text Converter.</i></small>
-		</p>
-		<textarea></textarea>
-		<img src="welcome-3.webp" alt="welcome-3">
+			<section>
+				<p>Open the extension (3) on any page<br>to start using Speech to Text Converter:</p>
+				<img src="welcome-2.webp" alt="welcome-2">
+			</section>
 
-		<h2>Speak now! <span class="emoji">🗣️</span></h2>
-		<p>
-			The recognized text will appear in the input field (7)<br>and will also be saved in the right section (8) of your browser.<br>
-			<small><i>It is stored locally and is not sent anywhere.</i></small>
-		</p>
-		<img src="welcome-4.webp" alt="welcome-4">
+			<section>
+				<h2>Try it out on this page!</h2>
+				<p>
+					Click the input field below (4),
+					tap the microphone button (5),<br>
+					and grant microphone permissions (6).<br>
+					<small><i>You'll need to grant permissions on each page where you want to use the Speech to Text Converter.</i></small>
+				</p>
+				<textarea placeholder="Click here to start typing... or dictating!"></textarea>
+				<img src="welcome-3.webp" alt="welcome-3">
+			</section>
+
+			<section>
+				<h2>Speak now! <span class="emoji">🗣️</span></h2>
+				<p>
+					The recognized text will appear in the input field (7)<br>and will also be saved in the right section (8) of your browser.<br>
+					<small><i>It is stored locally and is not sent anywhere.</i></small>
+				</p>
+				<img src="welcome-4.webp" alt="welcome-4">
+			</section>
+		</article>
 	</div>
 </body>
 </html>

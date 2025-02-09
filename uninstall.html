@@ -30,8 +30,16 @@
 	</script>
 	<noscript><div><img src="https://mc.yandex.ru/watch/99849246" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 	<!-- /Yandex.Metrika counter -->
+    <script>
+		window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+		window.amplitude.init('9641e63c32c15d560fc464c41994e082', {
+		  fetchRemoteConfig: true,
+		  autocapture: true,
+		});
+		window.amplitude.track('Page Opened', { page: 'Uninstall' });
+	</script>
 	<link rel="icon" type="image/png" sizes="64x64" href="logo-64.png">
-	<title>Speech to Text Converter</title>
+	<title>Speech to Text Converter. Uninstall</title>
 </head>
 <body>
 	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScws3mRdVz4_6EhNecs0mOxhNXYfBxoBmpRsbmGIW-jkOW9dw/viewform" frameborder="0"></iframe>

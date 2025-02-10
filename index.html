@@ -43,10 +43,13 @@
 
 		img {
 			box-shadow: #0004 0 25px 50px -12px;
-			border-radius: 8px;
+			border-radius: 12px;
+			box-sizing: border-box;
+			border: 1px solid #555555;
 		}
 
 		textarea {
+			position: relative;
 			display: block;
 			width: 100%;
 			height: auto;
@@ -60,12 +63,53 @@
 			overflow: hidden;
 		}
 
+		.textarea-wrapper::before {
+			content: '';
+			position: absolute;
+			right: -50px;
+			top: 70px;
+			width: 164px;
+			height: 130px;
+			background-image: url(arrow-3.png);
+			background-size: cover;
+			pointer-events: none;
+			animation: blink 2s ease-in-out infinite;
+			z-index: 1;
+		}
+
+		.textarea-wrapper::after {
+			content: '';
+			position: absolute;
+			left: -44px;
+			top: 50px;
+			width: 205px;
+			height: 117px;
+			background-image: url(arrow-4.png);
+			background-size: cover;
+			pointer-events: none;
+			animation: blink 2s ease-in-out infinite;
+			z-index: 1;
+			display: none;
+		}
+
+		.textarea-wrapper.was-focused::before {
+			display: none;
+		}
+
+		.textarea-wrapper.was-focused:not(.recorder-clicked)::after {
+			display: block;
+		}
+
+		.image-with-textarea {
+			margin-top: 30px;
+		}
+
 		/* small {
 			font-size: small;
 		} */
 
 		span.emoji {
-			transform: scale(2.3) translate(10px, -6px);
+			transform: scale(1.7) translate(4px, -2px);
 			display: inline-block;
 		}
 
@@ -92,6 +136,18 @@
 			width: 40px;
 			background-color: #eedca1;
 			border-radius: 50%;
+		}
+
+		@keyframes blink {
+			0% {
+				opacity: 1;
+			}
+			50% {
+				opacity: .6;
+			}
+			100% {
+				opacity: 1;
+			}
 		}
 	</style>
 	<script defer src="https://cloud.umami.is/script.js" data-website-id="795489f6-4984-4a04-bec0-62eb1d2e3ad5"></script>
@@ -139,17 +195,20 @@
 				<p>
 					Click the input field below (3),
 					tap the microphone button (4),<br>
-					and grant microphone permissions (5).<br>
+					grant microphone permissions (5),
+					and speak! <span class="emoji">🗣️</span>
 					<!-- <small><i>You'll need to grant permissions on each page where you want to use the Speech to Text Converter.</i></small> -->
 				</p>
-				<textarea placeholder="Click here to start typing... or dictating!"></textarea>
-				<img src="welcome-2.webp" alt="welcome-2">
+				<div class="textarea-wrapper">
+					<textarea placeholder="Click here to start typing... or dictating!"></textarea>
+				</div>
+				<img class="image-with-textarea" src="welcome-2.webp" alt="welcome-2">
 			</section>
 
 			<section>
-				<h2>Speak now! <span class="emoji">🗣️</span></h2>
+				<h2>Use it everywhere!</h2>
 				<p>
-					Open the extension (6) on any page.<br>
+					You can open the extension (6) on any page.<br>
 					The recognized text will appear in the input field (7)<br>and will also be saved in the right section (8) of your browser.<br>
 					<small><i>It is stored locally and is not sent anywhere.</i></small>
 				</p>
@@ -159,16 +218,35 @@
 	</div>
 
 	<script>
-		document.querySelectorAll("textarea").forEach(function(textarea) {
-			textarea.style.height = textarea.scrollHeight + "px";
-			textarea.style.overflowY = "hidden";
-
-			textarea.addEventListener("input", function() {
-				console.log(this.scrollHeight);
-				this.style.height = "auto";
-				this.style.height = this.scrollHeight + "px";
-			});
+		const textarea = document.querySelector("textarea");
+		const textareaWrapper = document.querySelector(".textarea-wrapper");
+		textarea.addEventListener('focus', () => {
+			textareaWrapper.classList.add('was-focused');
+			const hideButton = querySelectorAllShadows('.hide-button');
+			const recorderButton = querySelectorAllShadows('.recorder-button');
+			if (hideButton && hideButton[0]) {
+				hideButton[0].remove();
+			}
+			if (recorderButton && recorderButton[0]) {
+				recorderButton[0].addEventListener('click', () => {
+					textareaWrapper.classList.add('recorder-clicked');
+				});
+			}
+		})
+		textarea.style.height = textarea.scrollHeight + "px";
+		textarea.style.overflowY = "hidden";
+		textarea.addEventListener("input", function() {
+			console.log(this.scrollHeight);
+			this.style.height = "auto";
+			this.style.height = this.scrollHeight + "px";
 		});
+
+		function querySelectorAllShadows(selector, el = document.body) {
+			const childShadows = Array.from(el.querySelectorAll('*')).map(el => el.shadowRoot).filter(Boolean);
+			const childResults = childShadows.map(child => querySelectorAllShadows(selector, child));
+			const result = Array.from(el.querySelectorAll(selector));
+			return result.concat(childResults).flat();
+		}
 	</script>
 </body>
 </html>
